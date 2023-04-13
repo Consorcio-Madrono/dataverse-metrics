@@ -11,7 +11,7 @@ $(document).ready(function() {
   alias = (urlParams.get('parentAlias'));
 
   //Retrieve the configuration,  complete the header, and start creating graphs
-  $.getJSON('config.local.json', function(config) {
+  $.getJSON('config.local.es.json', function(config) {
 
     // Set the Dataverse server to use
     if (config.hasOwnProperty("installationURL")) {
@@ -19,7 +19,7 @@ $(document).ready(function() {
     }
 
     // Retrieve the tree of child dataverses and add them to the tree we use as a selector
-    // getJSON could be used throughout (it wasn't previously due to bugs in the API endpoints in determining when to send json versus text/csv)
+    // getJSON could be used throughout (it wasn't previously due to bugs in the API endpoints in determining when to send json versus dvserver + text/csv)
     $.getJSON(
       dvserver + '/api/info/metrics/tree' + addAlias(),
       function(data) {
@@ -39,13 +39,13 @@ $(document).ready(function() {
     );
 
     //Header Information
-    $('#title').html("<H1>Metrics from the " + config.installationName + "</H1>");
+    $('#title').html("<H1>Métricas de " + config.installationName + "</H1>");
     if (alias == null) {
-      $('#subtitle').html("<h2>Showing Metrics from the whole repository</h2>");
-      $('#selectString').html('<div>Click a sub-' + config.dataverseTerm + ' name to see its metrics</div>');
+      $('#subtitle').html("<h2>Mostrando las métricas completas del repositorio</h2>");
+      $('#selectString').html('<div>Pincha en el nombre del sub-' + config.dataverseTerm + ' para ver sus métricas</div>');
     } else {
-      $('#subtitle').html("<h2>Showing Metrics from the " + alias + " " + config.dataverseTerm + "</h2>");
-      $('#selectString').html('<div><a href="/dataverse-metrics">Show Metrics for the whole repository</a></div><div>Click a sub-' + config.dataverseTerm + ' name to see its metrics</div>');
+      $('#subtitle').html("<h2>Mostrando las métricas de " + alias + " " + config.dataverseTerm + "</h2>");
+      $('#selectString').html('<div><a href="/dataverse-metrics">Mostrando las métricas completas del repositorio</a></div><div>Pinche en el nombre del sub-' + config.dataverseTerm + ' para ver sus métricas</div>');
     }
     
     //Panels
@@ -110,16 +110,16 @@ function timeseries(name, config) {
     success: function(data) {
 
       data = data.data;
-      var yLabel = "Number of " + nameLabel;
+      var yLabel = "Número de " + nameLabel.replace('Downloads','Descargas').replace('Files','Ficheros');
       var visualization = d3plus.viz()
         .data(data)
-        .title(nameLabel)
+        .title(nameLabel.replace('Downloads','Descargas').replace('Files','Ficheros'))
         .container("#" + lcname)
         .type("bar")
         .id("date")
         .x({
           "value": "date",
-          "label": "Month"
+          "label": "Mes"
         })
         .y({
           "range": [0, data[data.length - 1].count * 1.3],
@@ -148,10 +148,10 @@ function dataversesByCategory(config) {
     headers: { Accept: "application/json" },
     success: function(data) {
       data = data.data;
-      var tileLabel = "Number of " + config.dataverseTerm + "s";
+      var tileLabel = "Número de " + config.dataverseTerm + "s";
       var visualization = d3plus.viz()
         .data(data)
-        .title(config.dataverseTerm + "s by Category")
+        .title(config.dataverseTerm + "s por categoría")
         .title({
           "total": true
         })
@@ -192,10 +192,10 @@ function dataversesBySubject(config) {
     success: function(data) {
       data = data.data;
 
-      var tileLabel = "Number of " + config.dataverseTerm + "s";
+      var tileLabel = "Número de " + config.dataverseTerm + "s";
       var visualization = d3plus.viz()
         .data(data)
-        .title(config.dataverseTerm + "s by Subject")
+        .title(config.dataverseTerm + "s por materia")
         .title({
           "total": true
         })
@@ -236,10 +236,10 @@ function datasetsBySubject(config) {
     success: function(data) {
       data = data.data;
 
-      var tileLabel = "Number of " + config.Term;
+      var tileLabel = "Número de " + config.Term + "s";
       var visualization = d3plus.viz()
         .data(data)
-        .title(config.datasetTerm + " by Subject")
+        .title(config.datasetTerm + "s por materia")
         .title({
           "total": true
         })
@@ -282,21 +282,21 @@ function makeDataCount(metric, config) {
     success: function(data) {
 
       data = data.data;
-      var yLabel = "Number of " + metric;
+      var yLabel = "Número de " + metric;
       var visualization = d3plus.viz()
         .data(data)
-        .title("Make Data Count Metrics-" + metric)
+        .title("Métricas Make Data Count - " + metric.replace('UniqueDownloads','descargas únicas').replace('Downloads','Descargas').replace('viewsTotal','Visitas totales').replace('','').replace('downloadsTotal','Descargas totales').replace('viewsUnique','Visitas únicas').replace('downloadsUnique','Descargas únicas').replace('Files','Ficheros'))
         .container("#makedatacount-" + metric)
         .type("bar")
         .id("date")
         .x({
           "value": "date",
-          "label": "Month"
+          "label": "Mes"
         })
         .y({
           "range": [0, data[data.length - 1].count * 1.3],
           "value": "count",
-          "label": yLabel
+          "label": yLabel.replace('UniqueDownloads','descargas únicas').replace('Downloads','Descargas').replace('viewsTotal','Visitas totales').replace('','').replace('downloadsTotal','Descargas totales').replace('viewsUnique','Visitas únicas').replace('downloadsUnique','Descargas únicas').replace('Files','Ficheros')
         })
         .color(function(d) {
           return color;
@@ -323,16 +323,16 @@ function multitimeseries(name, config, groupby) {
     success: function(data) {
 
       data = data.data;
-      var yLabel = "Number of " + name;
+      var yLabel = "Número de " + name.replace('UniqueDownloads','Descargas únicas');
       var visualization = d3plus.viz()
         .data(data)
-        .title(name)
+        .title(name.replace('UniqueDownloads','Descargas únicas'))
         .container("#" + lcname)
         .type("stacked")
         .id(groupby)
         .x({
           "value": "date",
-          "label": "Month"
+          "label": "Mes"
         })
         .y({
           "value": "count",
@@ -365,18 +365,18 @@ function filesByType(config) {
       data = data.data;
       var countVisualization = d3plus.viz()
         .data(data).dev(true)
-        .title("File Count By Type")
+        .title("Número de ficheros por tipo")
         .container("#files-by-type-count")
         .type("bar")
         .id("contenttype")
 
         .x({
           "value": "contenttype",
-          "label": "Content Type"
+          "label": "Tipo de contenido"
         })
         .y({
           "value": "count",
-          "label": "File Count",
+          "label": "Valor",
           "scale": "linear"
         })
         .order("count")
@@ -390,17 +390,17 @@ function filesByType(config) {
 
       var sizeVisualization = d3plus.viz()
         .data(data.filter(d=>d.size > 0)).dev(true)
-        .title("File Size By Type")
+        .title("Tamaño de fichero por tipo")
         .container("#files-by-type-size")
         .type("bar")
         .id("contenttype")
         .x({
           "value": "contenttype",
-          "label": "Content Type"
+          "label": "Tipo de contenido"
         })
         .y({
           "value": "size",
-          "label": "Total Size By File Type",
+          "label": "Tamaño total por tipo de fichero",
           "scale": "log"
         })
         .order("size")
@@ -414,7 +414,7 @@ function filesByType(config) {
     }
   });
   $("#files-by-type-count").append($("<a/>").addClass("button").attr("href", "/api/info/metrics/files/byType" + addAlias()).attr("type", "text/csv").text("CSV"));
-  $("#files-by-type-size").append($("<span/>").addClass("redundant").attr("title", "These metrics are included in the CSV for the 'File Count By Type'").text("CSV").append($("<span/>").addClass("glyphicon glyphicon-question-sign")));
+  $("#files-by-type-size").append($("<span/>").addClass("redundant").attr("title", "Estas métricas están incluidas en el CSV de 'Número de ficheros por tipo'").text("CSV").append($("<span/>").addClass("glyphicon glyphicon-question-sign")));
 }
 
 //Shows the unique download count per PID
@@ -426,7 +426,7 @@ function uniqueDownloads(config) {
     headers: { Accept: "application/json" },
     success: function(data) {
       data = data.data;
-      var title = "Unique Downloads per " + config.datasetTerm;
+      var title = "Descargas únicas por " + config.datasetTerm;
       var maxBars = config["maxBars"];
       if (typeof maxBars !== "undefined") {
         data = data.slice(0, maxBars);
@@ -440,11 +440,11 @@ function uniqueDownloads(config) {
         .id("pid")
         .x({
           "value": "pid",
-          "label": config.datasetTerm + " Identifier"
+          "label": "Identificador del " + config.datasetTerm
         })
         .y({
           "value": "count",
-          "label": "Unique Download Count",
+          "label": "Descargas únicas",
           "scale": "linear"
         })
         //the API orders the results (so the slice gets the ones with the most counts), but the graph will reorder the without this
@@ -479,7 +479,7 @@ function fileDownloads(config) {
             if(data[0].pid.length==0) {
                     xName="id";
             }
-      var title = "Downloads per DataFile";
+      var title = "Descargas por fichero";
       var maxBars = config["maxBars"];
       if (typeof maxBars !== "undefined") {
         data = data.slice(0, maxBars);
@@ -493,11 +493,11 @@ function fileDownloads(config) {
         .id("id")
         .x({
           "value": xName,
-          "label": config.datasetTerm + " Identifier"
+          "label": "Identificador " + config.datasetTerm
         })
         .y({
           "value": "count",
-          "label": "Download Count",
+          "label": "Número de descargas",
           "scale": "linear"
         })
         //the API orders the results (so the slice gets the ones with the most counts), but the graph will reorder the without this

@@ -1,0 +1,49 @@
+{
+  "installationURL": "https://edatos.consorciomadrono.es",
+  "installationName":"e-cienciaDatos",
+  "dataverseTerm": "Dataverse",
+  "datasetTerm": "Dataset",
+  "downloadsHeader": "Descargas",
+  "makeDataCountHeader": "Métricas 'Make Data Count'",
+  "holdingsHeader": "Contenedores",
+  "timeseries.dataverses.definition":"Número total de dataverses publicados a lo largo del tiempo",
+  "timeseries.datasets.definition":"Número total de datasets publicados a lo largo del tiempo",
+  "timeseries.files.definition":"Número total de ficheros publicados en datasets a lo largo del tiempo",
+  "timeseries.downloads.definition":"Número total de ficheros descargados a lo largo del tiempo",
+  "dataversesbycategory.definition":"Distribución de dataverses por gategoría",
+  "dataversesbysubject.definition":"Distribución de dataverses por materia",
+  "datasetsbysubject.definition":"Distribución de datasets por materia",
+  "uniquedownloads.definition":"Descargas únicas por dataset. Esta métrica representa el número de gente que ha descargado uno o más ficheros de un dataset concreto",
+  "multitimeseries.uniquedownloads.definition":"Descargas únicas por dataset en función del tiempo. Esta métrica representa el número de gente que ha descargado uno o más ficheros de un dataset concreto",
+  "filesbytype.definition":"Distribución de ficheros por tipo",
+  "filedownloads.definition":"Descargas por fichero",
+  "makedatacount.viewstotal.definition":"Número total de visitas al dataset. Correponde con 'Total Dataset Investigations' según la definición del estándard 'Make Data Count'",
+  "makedatacount.downloadstotal.definition":"Número total de datasets descargados. Correponde con 'Total Dataset Requests' según la definición del estándard 'Make Data Count'",
+  "makedatacount.viewsunique.definition":"Número de visitas únicas al dataset. Correponde con 'Unique Dataset Investigations' según la definición del estándard 'Make Data Count'",
+  "makedatacount.downloadsunique.definition":"Número de descargas únicas del dataset. Correponde con 'Unique Dataset Requests' según la definición del estándard 'Make Data Count'",
+  "maxBars": 50,
+  "globalConfigured":"false",
+  "colors": {
+    "dataverses/monthly": "#CF3636",
+    "dataverses/byCategory": [
+      "#B22200",
+      "#006699"
+    ],
+    "dataverses/bySubject": [
+      "#B22200",
+      "#006699"
+    ],
+    "datasets/monthly": "#E58433",
+    "datasets/bySubject": [
+      "#B22200",
+      "#006699"
+    ],
+    "files/monthly": "#006699",
+    "downloads/monthly": "#B94617",
+    "uniquedownloads/monthly": "#B94617",
+    "makeDataCount/viewsTotal/monthly": "#6c757d",
+    "makeDataCount/downloadsTotal/monthly": "#006699",
+    "makeDataCount/viewsUnique/monthly": "#224F20",
+    "makeDataCount/downloadsUnique/monthly": "#b22200"
+  }
+}
