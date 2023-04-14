@@ -45,7 +45,7 @@ $(document).ready(function() {
       $('#selectString').html('<div>Click a sub-' + config.dataverseTerm + ' name to see its metrics</div>');
     } else {
       $('#subtitle').html("<h2>Showing Metrics from the " + alias + " " + config.dataverseTerm + "</h2>");
-      $('#selectString').html('<div><a href="/dataverse-metrics">Show Metrics for the whole repository</a></div><div>Click a sub-' + config.dataverseTerm + ' name to see its metrics</div>');
+      $('#selectString').html('<div><a href= "' + window.location.href.split('?')[0] +'">Show Metrics for the whole repository</a></div><div>Click a sub-' + config.dataverseTerm + ' name to see its metrics</div>');
     }
     
     //Panels
@@ -532,7 +532,7 @@ function addAlias() {
 
 //Turn dataverse names into links to the metrics page using that dataverse as the parent
 function updateNames(node) {
-  node.name = "<a href='" + window.location + "?parentAlias=" + node.alias + "'>" + node.alias + "</a>";
+  node.name = "<a href='" + window.location.href.split("?")[0] + "?parentAlias=" + node.alias + "'>" + node.alias + "</a>";
   if (typeof node.children !== 'undefined') {
     node.children.forEach((childnode) => {
       updateNames(childnode);
